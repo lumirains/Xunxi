@@ -33,7 +33,7 @@ Xunxi 不是群聊管家，也不是多租户客服 Bot——是一个私享的�
 
 ### 血统
 
-项目的前身是 [Kondius/qq-agent](https://github.com/Kondius/qq-agent)（源自 [Derpyu520/qq-bridge](https://github.com/Derpyu520/qq-bridge)，MIT）——一个与 QQ 深度耦合的群聊机器人，"仿真群友"的思路是起点。上游停止维护后，作者保留了少量工具层核心函数（媒体处理、搜索、安全抓取），其余——大脑/身体分离、状态单一写者、记忆巩固管线、存储、语音栈——全部重设计与重实现。两位上游作者按 MIT 义务保留署名于 [LICENSE](LICENSE)。
+项目的前身是 [Kondius/qq-agent](https://github.com/Kondius/qq-agent)（源自 [Derpyu520/qq-bridge](https://github.com/Derpyu520/qq-bridge)）——一个与 QQ 深度耦合的群聊机器人，"仿真群友"的思路是起点。**本仓库取材自 qq-bridge 在 2026-10-30 之前的 MIT 版本**（上游其后改用 PolyForm Noncommercial，与本仓库无关；qq-agent 仓库已下线）。上游停止维护后，作者保留了少量工具层核心函数（媒体处理、搜索、安全抓取），其余——大脑/身体分离、状态单一写者、记忆巩固管线、存储、语音栈——全部重设计与重实现。两位上游作者按 MIT 义务保留署名于 [LICENSE](LICENSE)。
 
 ---
 
@@ -235,6 +235,6 @@ cd /d/Tools/GPT-SoVITS && ./runtime/python.exe api_v2.py -a 127.0.0.1 -p 9880
 
 ## 许可
 
-[MIT](LICENSE)。署名：Kondius（qq-agent 原始作者）· lumirains（Xunxi 的重设计与后续维护）——两者按 MIT 义务并存，请勿移除。
+[MIT](LICENSE)。署名：Kondius（qq-agent 原始作者）· Derpyu520 与 qq-bridge 贡献者（qq-bridge 原始作者）· lumirains（Xunxi 的重设计与后续维护）——三者按 MIT 义务并存，请勿移除。
 
 依赖的 whisper.cpp / GPT-SoVITS 各自遵其许可，本项目不分发它们。

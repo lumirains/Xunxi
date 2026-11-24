@@ -35,8 +35,8 @@ const BRAND = {
   companyName: 'lumirains',
   internalName: 'Xunxi',
   originalFilename: EXE_NAME,
-  // MIT 双署名：qq-agent 原始作者与 Xunxi 改造者都要保留
-  legalCopyright: 'Copyright © 2026 Kondius (qq-agent 原始作者) · lumirains (Xunxi 改造与维护) · MIT License',
+  // MIT 双署名：qq-agent 与 qq-bridge 的原始版权声明都要保留（完整表述见仓库 LICENSE）
+  legalCopyright: 'Copyright © 2026 lumirains (Xunxi 改造与维护) · 含 Kondius (qq-agent) 与 Derpyu520 (qq-bridge) 的 MIT 授权部分',
   comments: '一个运行在自己电脑上的私人 AI 伴侣',
 };
 
