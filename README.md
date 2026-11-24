@@ -1,6 +1,13 @@
-# Xunxi
+<p align="center">
+  <img src="assets/icon.png" width="128" alt="Xunxi icon">
+</p>
 
-一个跑在你自己电脑上的**私人 AI 伴侣**：她有长期的记忆、心绪、日记和自己的生活，只和你一个人说话。
+<h1 align="center">Xunxi</h1>
+
+<p align="center">
+  一个跑在你自己电脑上的<strong>私人 AI 伴侣</strong>：<br>
+  她有长期的记忆、心绪、日记和自己的生活，只和你一个人说话。
+</p>
 
 > 为单人自用而生，开源的是**架构蓝图**，不含任何用户数据——所有对话、记忆、日记都只存在你本机的数据目录里。
 
