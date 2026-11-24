@@ -23,5 +23,8 @@
   "bugs": {
     "url": "https://github.com/lumirains/Xunxi/issues"
   },
-  "homepage": "https://github.com/lumirains/Xunxi#readme"
+  "homepage": "https://github.com/lumirains/Xunxi#readme",
+  "devDependencies": {
+    "rcedit": "^5.0.2"
+  }
 }
