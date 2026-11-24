@@ -5,7 +5,7 @@
 <h1 align="center">Xunxi</h1>
 
 <p align="center">
-  <strong>私人 AI 伴侣</strong>：只和你一个人说话。
+  <strong>只听你一人心事，只守这一方灯火。</strong>
 </p>
 
 ---
