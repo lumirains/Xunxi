@@ -1,0 +1,27 @@
+{
+  "name": "xunxi",
+  "version": "0.1.0-dev",
+  "private": false,
+  "description": "Xunxi（Xunxi）—— 个人桌面 AI 伴侣：事件驱动大脑 + 可插拔身体。",
+  "type": "module",
+  "main": "electron/main.js",
+  "engines": {
+    "node": ">=20.0.0"
+  },
+  "dependencies": {
+    "better-sqlite3": "12.11.1",
+    "js-yaml": "^5.4.1",
+    "undici": "^6.28.0",
+    "ws": "^8.18.0"
+  },
+  "license": "MIT",
+  "author": "lumirains",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/lumirains/Xunxi.git"
+  },
+  "bugs": {
+    "url": "https://github.com/lumirains/Xunxi/issues"
+  },
+  "homepage": "https://github.com/lumirains/Xunxi#readme"
+}

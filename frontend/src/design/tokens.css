@@ -1,0 +1,300 @@
+/* ============================================================
+   Xunxi · 设计令牌 —— 「灯下 / 晨纸」（2026-11-16 重做）
+   ------------------------------------------------------------
+   与旧「纸张风」的关系：纸色底保留为亮色版（晨纸），但**不再是唯一形态**；
+   暗色从「亮色的取反」变成独立设计的「夜」——两套色板各自成立。
+
+   夜（暗）：夜色是冷的（深蓝墨 #141821），灯是暖的（琥珀）。
+             冷底上任何一点暖色都会亮起来 —— 这是「灯下」的物理前提。
+   晨纸（亮）：亚麻纸底 + 咖啡墨字，暖色点缀压深一档保对比。
+
+   颜色角色（两套一一对应，变量名不改）：
+     --paper  底       --card   卡面      --ink   主字
+     --ink-2  次字     --line   细线      --line-strong 强调线
+     --accent 琥珀     交互：当前项 / 主按钮 / 潮位填充
+     --warm   陶土     汐：她的名字 / 她的话 / 心绪 / 挂心事
+     --olive  苔绿     正向：成功态 / 上涨的数值
+     --gold   麦金     稀有：潮位数字
+     --ink-strong     强对比字（标题）
+
+   材质：--grain-op 纸纹浓度（body::after 噪点层）· --shadow 暖阴影
+   语义分工（排版承担语义）：衬线 = 她 / 无衬线 = 系统与我 / 等宽 = 数据
+   ============================================================ */
+
+/* ---- 颜色组 · 晨纸（亮，默认）---- */
+:root {
+  color-scheme: light;     /* 原生控件（select 下拉/滚动条/勾选框）随主题着色 */
+  --paper:#F4EFE4;         /* 亚麻纸底 */
+  --card:#FFFDF7;          /* 卡面（暖白，非纯白） */
+  --ink:#38312A;           /* 主字 · 咖啡墨 */
+  --ink-2:#6B6153;         /* 次字 */
+  --mist-3:#9A9080;        /* 三级字 / 标签 */
+  --line:#E8DFCC;          /* 细线 */
+  --line-strong:#D6CAB1;   /* 强调线 */
+  --accent:#A9701F;        /* 琥珀 · 交互（压深一档保对比） */
+  --ink-strong:#2A241D;    /* 强对比字 */
+  --warm:#A85F3C;          /* 陶土 · 她的颜色 */
+  --olive:#5E6B37;         /* 苔绿 · 正向 */
+  --gold:#8A6E22;          /* 麦金 · 稀有 */
+  --grain-op:.05;          /* 纸纹浓度 */
+  --shadow:0 1px 2px rgba(92,70,44,.05), 0 12px 30px -18px rgba(92,70,44,.30);
+  --lamp:radial-gradient(58% 58% at 26% 0%, rgba(168,95,60,.07), transparent 72%);
+  --ring:0 2px 8px rgba(120,95,60,.18);
+}
+
+:root[data-theme='dark'] {
+  /* ---- 颜色组 · 夜（暗，冷底暖点）---- */
+  color-scheme: dark;      /* 修：原生 select 闭面/弹层跟浏览器亮色渲染的白块问题 */
+  --paper:#141821;
+  --card:#1B202B;
+  --ink:#E9EDF5;
+  --ink-2:#9AA4B8;
+  --mist-3:#6C7688;
+  --line:#2B3242;
+  --line-strong:#3A4358;
+  --accent:#E3A75C;        /* 琥珀 · 交互（冷底上最亮的一档） */
+  --ink-strong:#F2F5FA;
+  --warm:#CE8A6B;          /* 陶土 · 她的颜色 */
+  --olive:#96A96A;         /* 苔绿 · 正向 */
+  --gold:#E0C684;          /* 麦金 · 稀有 */
+  --grain-op:.035;
+  --shadow:0 1px 0 rgba(255,255,255,.035) inset, 0 18px 40px -24px rgba(0,0,0,.85);
+  --lamp:radial-gradient(58% 58% at 26% 0%, rgba(227,167,92,.11), transparent 72%);
+  --ring:0 0 0 1.5px rgba(227,167,92,.42), 0 0 24px -6px rgba(227,167,92,.40);
+}
+
+/* ---- 字体组（与主题无关，换肤不替换）---- */
+:root {
+  --font-serif: Georgia, 'Noto Serif SC', 'Source Han Serif SC', serif;
+  --font-sans: 'Segoe UI', 'Microsoft YaHei', sans-serif;
+  --font-mono: Consolas, 'Cascadia Code', monospace;
+
+  /* 间距节奏：8px 基数 */
+  --space-1: 8px;
+  --space-2: 16px;
+  --space-3: 24px;
+  --space-4: 32px;
+
+  /* 圆角：小件 6px / 卡片 14px / 胶囊 20px */
+  --radius-card: 6px;
+  --radius-lg: 14px;
+  --radius-pill: 20px;
+}
+
+*, *::before, *::after { box-sizing: border-box; }
+
+html, body { margin: 0; padding: 0; height: 100%; }
+
+body {
+  background: var(--paper);
+  color: var(--ink);
+  font-family: var(--font-sans);
+  font-size: 15px;
+  line-height: 1.7;
+  -webkit-font-smoothing: antialiased;
+  /* S2 设计稿五：主题切换 150ms 过渡（亮暗互换时底/字色柔和跟随；
+     变量组整组替换，这里只过渡最终生效的 color/background） */
+  transition: color 0.15s ease, background-color 0.15s ease;
+}
+
+/* 纸纹：一层极淡噪点铺满全屏 —— 底色从「色块」变成「纸」 */
+body::after {
+  content: "";
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 999;
+  opacity: var(--grain-op);
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='g'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='160' height='160' filter='url(%23g)'/%3E%3C/svg%3E");
+}
+
+/* ── 滚动条：细而暖，不打断版面 ───────────────────────────
+   浏览器默认滚动条是系统灰白，在纸面上很扎眼。这里统一成
+   「透明轨道 + 一根细墨条」，与细线分层同一套语法；
+   亮暗两版各取自己的次级字色，跟随主题自动变。
+   （滚动条宽度收窄后不再用 scrollbar-gutter 占位） */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: color-mix(in srgb, var(--ink-2) 42%, transparent) transparent;
+}
+
+::-webkit-scrollbar {
+  width: 9px;
+  height: 9px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: color-mix(in srgb, var(--ink-2) 34%, transparent);
+  border: 2px solid transparent;
+  border-radius: 999px;
+  background-clip: padding-box;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: color-mix(in srgb, var(--ink) 55%, transparent);
+  background-clip: padding-box;
+}
+
+::-webkit-scrollbar-corner {
+  background: transparent;
+}
+
+h1, h2, h3, h4 {
+  font-family: var(--font-serif);
+  font-weight: 600;
+  margin: 0;
+}
+
+p { margin: 0 0 10px; }
+
+a { color: inherit; text-decoration: none; }
+
+ul, ol { margin: 0; padding: 0; list-style: none; }
+
+pre { font-family: var(--font-mono); }
+
+/* ---- 全局基底：无渐变，卡片用 1px 细线分层 ---- */
+.card {
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow);
+}
+
+button {
+  font-family: var(--font-sans);
+  font-size: 13px;
+}
+
+/* ---- 基础组件原语 ---- */
+
+/* 按钮：静默描边态；交互高亮用琥珀描边+字，不铺大色块 */
+.btn {
+  appearance: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 14px;
+  background: var(--card);
+  border: 1px solid var(--line-strong);
+  border-radius: var(--radius-pill);
+  color: var(--ink);
+  cursor: pointer;
+  transition: border-color 0.15s ease, color 0.15s ease;
+}
+
+.btn:hover:not(:disabled) { border-color: var(--accent); color: var(--accent); }
+
+.btn:disabled { opacity: 0.5; cursor: default; }
+
+/* 主操作：琥珀描边 + 琥珀字 */
+.btn-accent {
+  border-color: var(--accent);
+  color: var(--accent);
+}
+
+/* 徽标：等宽小字 + 细线描边，不上彩色 */
+.badge {
+  display: inline-block;
+  padding: 0 7px;
+  border: 1px solid var(--line-strong);
+  border-radius: 3px;
+  color: var(--ink-2);
+  font-family: var(--font-mono);
+  font-size: 11px;
+  line-height: 18px;
+  white-space: nowrap;
+}
+
+/* 关键数字：琥珀 + 等宽 */
+.key-num {
+  font-family: var(--font-mono);
+  color: var(--accent);
+}
+
+/* 数值横条原语：细线轨道 + 墨色填充 */
+.bar {
+  position: relative;
+  height: 6px;
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: 3px;
+  overflow: hidden;
+}
+
+.bar-fill {
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  background: var(--ink);
+}
+
+/* 页面区块标题（衬线小节标题 + 细线） */
+.section-title {
+  margin: 0;
+  padding-bottom: var(--space-1);
+  border-bottom: 1px solid var(--line);
+  font-family: var(--font-serif);
+  font-size: 20px;
+  font-weight: 600;
+  color: var(--ink-strong);
+  letter-spacing: 0.08em;
+}
+
+
+/* ============================================================
+   原生表单控件主题化 + 勾选框重设计（2026-11-21 所有者）
+   color-scheme 已随两套颜色组声明 —— select 闭面/弹层随主题；
+   勾选框整体重绘：方圆角轨 + 琥珀填充 + 对勾，替代浏览器原样。
+   ============================================================ */
+select {
+  background-color: var(--card);
+  color: var(--ink);
+}
+
+select option {
+  background: var(--card);
+  color: var(--ink);
+}
+
+input[type='checkbox'] {
+  appearance: none;
+  box-sizing: border-box;
+  width: 16px;
+  height: 16px;
+  flex: none;
+  margin: 0;
+  border: 1.5px solid var(--line-strong);
+  border-radius: 4px;
+  background: var(--card);
+  cursor: pointer;
+  transition: background-color 0.15s ease, border-color 0.15s ease, box-shadow 0.15s ease;
+}
+
+input[type='checkbox']:hover {
+  border-color: var(--accent);
+}
+
+input[type='checkbox']:checked {
+  background-color: var(--accent);
+  border-color: var(--accent);
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath d='M3.5 8.5l3 3L12.5 5' fill='none' stroke='%23FFFDF7' stroke-width='2.4' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+  background-size: 11px 11px;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+input[type='checkbox']:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 1px;
+}
+
+input[type='checkbox']:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}

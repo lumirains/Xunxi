@@ -1,0 +1,22 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <!-- P4（night-plan-pwa §P4）：PWA 基建。manifest 全站生效（桌面可装=无害，
+         §1）；theme_color 取亮组 design token --paper（#FAF9F5，handoff §29-8
+         定案；深浅色跟随由既有 data-theme 机制负责，manifest/meta 取亮组常量）；
+         apple-touch-icon 用 maskable 版（全出血纸底 + 「汐」收 80% 安全区，
+         iOS 圆角遮罩下四角不露透明）；viewport-fit=cover 供 Pwa.vue 的
+         env(safe-area-inset-*)（P1 预留，P4 落地）。 -->
+    <link rel="manifest" href="/manifest.webmanifest" />
+    <meta name="theme-color" content="#FAF9F5" />
+    <link rel="apple-touch-icon" href="/icons/pwa-maskable-192.png" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+    <title>Xunxi</title>
+  </head>
+  <body>
+    <div id="app"></div>
+    <script type="module" src="/src/main.ts"></script>
+  </body>
+</html>
